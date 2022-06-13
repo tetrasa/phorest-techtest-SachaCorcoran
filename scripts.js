@@ -1,5 +1,6 @@
 //account details 
 const buisnessID = "eTC3QY5W3p_HmGHezKfxJw";
+var branchID = "SE-J0emUgQnya14mOGdQSw";
 var username ="global/cloud@apiexamples.com"
 var password ="VMlRo/eh+Xd8M~l"
 
@@ -11,7 +12,7 @@ var authmessage = "Basic " + btoa(username + ':' + password); //Create Authentic
 
 $(document).ready(function () {
 
-    $(".clientSearchButton").click(function () {
+    $(".clientSearchButton").click(function () {//get clients button
         //clear any populated client data and empty the client list
         clients = [];
         selectedClient = [];
@@ -26,8 +27,8 @@ $(document).ready(function () {
         })
     });
 
-    $(".voucherButton").click(function () {
-        if (selectedClient.clientId != null) {
+    $(".voucherButton").click(function () {//create voucher button
+        if (selectedClient.clientId != null) {//needs a client Id per spec
             createVoucher();
         } else {
             alert("Please select a client first");
@@ -35,7 +36,7 @@ $(document).ready(function () {
         }
     });
 
-    $("#clientSelect").change(function () {
+    $("#clientSelect").change(function () {//dropdown for clients
         //clear any voucher details on display
         $("#voucherDis").empty();
         //when you select a new client show their data
@@ -60,7 +61,9 @@ function getClients() {
       data: {
           size: $("#cAmount").val(),
           firstName: $("#cFirstName").val(),
-          lastName:$("#cSurname").val()
+          lastName: $("#cSurname").val(),
+          email: $("#cEmail").val(),
+          phone:$("#cPhone").val()
         },
        url: "https://api-gateway-dev.phorest.com:443/third-party-api-server/api/business/" + buisnessID + "/client",
        dataFilter: result => JSON.stringify(JSON.parse(result)),
@@ -89,25 +92,27 @@ function createVoucher() {
         data: JSON.stringify({
             "clientId": selectedClient.clientId,
             "createdAt": d.toISOString(),
-            "creatingBranchId": "SE-J0emUgQnya14mOGdQSw",
+            "creatingBranchId": branchID,
             "expiryDate": $("#vExpiry").val(),
             "issueDate": $("#vIssue").val(),
             "originalBalance": $("#vAmount").val(),
-            "serialNumber": ""        
-         }),
-         url: "https://api-gateway-dev.phorest.com:443/third-party-api-server/api/business/" + buisnessID + "/voucher", 
-        success: function (result) {    
-            //alert(result);
+            "serialNumber": ""
+        }),
+        url: "https://api-gateway-dev.phorest.com:443/third-party-api-server/api/business/" + buisnessID + "/voucher",
+        success: function (result) {
+            //show voucher details
             document.getElementById('voucherDis').innerHTML = JSON.stringify(result, null, 2);
             $("#clients").empty();//clear the client details
         },
-        error: (xhr, status, errorThrown) => false
+        error: function (xhr, status, errorThrown) {
+            alert("Voucher creation encountered an error\n" + status);
+        }
     });
 };
 
 function popClientSelect() {
     var target = document.getElementById("clientSelect");
-
+    //create the list from clients
     for (var i = 0; i < clients.length; i++) {
         var opt = clients[i];
         var el = document.createElement("option");
