@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="jquery-3.6.0.min.js"></script>
+    <script src="scripts.js" type="text/javascript"></script>
+
+
+
+</head>
+<body>
+
+
+<div class="sidenav">
+    <div class="container">
+
+        <div>
+            <label><b>Fist Name</b></label>
+            <input type="text" id="cFirstName" placeholder="Filter by First Name"><n />
+            <label><b>Surname</b></label>
+            <input type="text" id="cSurname" placeholder="Filter by Surname"><n />
+            <label><b>Max Results</b></label>
+            <input type="text" id="cAmount" placeholder="Amount of clients returned, Max 100"><n />
+
+            <button type="submit" class="clientSearchButton">Get Clients</button>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div>
+            <label><b>Amount</b></label>
+            <input type="text" id="vAmount" value="0"><n />
+            <label><b>Expiry Date</b></label>
+            <input type="date" id="vExpiry"><n />
+            <label><b>Issue Date</b></label>
+            <input type="date" id="vIssue" ><n />
+
+            <button type="submit" class="voucherButton">Create Voucher</button>
+        </div>
+
+    </div>
+
+    </div>
+
+    <pre>
+<select id="clientSelect">
+    <option>Get clients to populate list</option>
+    </select>
+<code id=voucherDis></code>
+    <code id=clients></code>
+</pre>
+
+
+
+
+</body>
+</html>
